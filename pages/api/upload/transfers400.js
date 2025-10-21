@@ -10,11 +10,21 @@ const JWT_SECRET = process.env.JWT_SECRET || 'fallback-secret-key'
 
 const today = new Date();
 
+
+// วันที่
 const year = today.getFullYear();
 const month = String(today.getMonth() + 1).padStart(2, '0');
 const day = String(today.getDate()).padStart(2, '0');
 
+// เวลา
+const hours = String(today.getHours()).padStart(2, '0');
+const minutes = String(today.getMinutes()).padStart(2, '0');
+const seconds = String(today.getSeconds()).padStart(2, '0');
+
+
+
 const formattedDate = `${year}${month}${day}`;
+const formattedTime = `${hours}${minutes}${seconds}`;
 
 export const config = {
   api: {
@@ -95,11 +105,11 @@ export default async function handler(req, res) {
               record.otram,
               record.obamt,
               formattedDate,
-              record.otime
+              formattedTime
             ])
             insertedCount++
           }
-          
+
         }
 
         const statusAs400 = insertedCount > 0
