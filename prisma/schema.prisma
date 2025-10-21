@@ -1,0 +1,88 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model MakroProPayment {
+  id_temp Int     @id @default(autoincrement())
+  Docno String?  
+  OrderNo String?
+  create_date DateTime?
+  statusOrder String?
+  Subtotal_incl_tax Float?
+  Shipping_cost_incl_tax Float?
+  total_amount_incl_tax Float?
+  Commission Float?
+  Tax_commission Float?
+  Amount_transfer Float?
+  qty Int?
+  Product_name String?
+  product_SKU String?
+  approve_date_payment DateTime?
+  Shipping_method String?
+  Shipping_address_first_name String?
+  Shipping_address_last_name String?
+  Shipping_address_company String?
+
+  Shipping_address_street_1 String?
+  Shipping_address_street_2 String?
+  Additional_address_info String?
+  Shipping_address_zip String?
+
+  Shipping_address_city String?
+  Shipping_address_state String?
+  Shipping_address_country String?
+  Billing_address_first_name String?
+  Billing_address_last_name String?
+
+  Billing_address_company String?
+  Billing_address_street_1 String?
+  Billing_address_street_2 String?
+  Additional_billing_address_info String?
+ 
+  Billing_address_zip String?
+
+  Billing_address_city String?
+  Billing_address_state String?
+  Billing_address_country String?
+  
+  Product_subtotal_dont_know_tax Float?
+  Tax_product Float?
+  Shipping_excluding_tax Float?
+  Tax_shipping Float?
+  Total_excluding_tax Float?
+  Tax_calculated_on_net_total Float?
+  Currency String?
+  Offer_SKU String?
+
+  @@map("makroPro_Payment")
+}
+
+model UserMakroPro {
+  user_id Int @id @default(autoincrement()) // ใช้ชื่อ id ตาม DB
+  username String?  
+  password String?  
+  password_hash String?  
+  email String?
+  role String?
+  resign Int?
+  firstName String?
+  lastName String?
+  fullName String?
+  @@map("User_MakroPro")
+}
+
+model TestPrisma {
+  id Int  @id @default(autoincrement()) // ใช้ชื่อ id ตาม DB
+  nametest String?  
+
+  @@map("test_prisma")
+}
+
