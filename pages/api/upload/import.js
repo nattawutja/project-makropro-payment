@@ -138,6 +138,15 @@ export default async function handler(req, res) {
             data: dataToInsert
           });
 
+          //console.log(dataToInsert.length,"<-------------dataToInsert.length");
+          await prisma.LogUserMkPro.create({
+            data: {
+              // ฟิลด์ที่ต้องการเพิ่ม
+              user_id: decoded.id,
+              totalFile: dataToInsert.length
+            }
+          });
+
           const result = await prisma.$queryRaw`
             WITH cte AS (
               SELECT 
