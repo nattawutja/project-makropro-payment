@@ -86,3 +86,12 @@ model TestPrisma {
   @@map("test_prisma")
 }
 
+model LogUserMkPro {
+  id Int  @id @default(autoincrement()) // ใช้ชื่อ id ตาม DB
+  user_id Int?
+  totalFile Int?
+  importDate DateTime @default(now())
+  
+  @@map("log_UserImportMakroPro")
+}
+
