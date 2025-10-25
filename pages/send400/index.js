@@ -206,6 +206,7 @@ const DuplicateInfoCard = ({ duplicateInfo }) => {
 }
 
 export default function UploadPage() {
+  const [uploadingFile, setUploadingFile] = useState(false);
   const [user, setUser] = useState(null);
   const [name, setName] = useState('');
   const [selectedFile, setSelectedFile] = useState(null);
@@ -400,6 +401,8 @@ export default function UploadPage() {
   }
 
   const handleUpload = async () => {
+
+    setUploadingFile(true);
 
     if (!selectedFile) {
       showToast('กรุณาเลือกไฟล์ที่ต้องการอัพโหลด', 'warning')
@@ -650,7 +653,7 @@ export default function UploadPage() {
                       <div className="flex space-x-4">
                         <button
                           onClick={handleUpload}
-                          disabled={uploading || (!fileHasChanged && !!uploadResult)}
+                          disabled={uploadingFile}
                           className={`bg-blue-500 rounded-lg py-2 flex-1 flex items-center justify-center transition-all duration-200 ${
                             (!fileHasChanged && !!uploadResult)
                               ? 'opacity-50 cursor-not-allowed bg-gray-400 hover:bg-gray-400' 
