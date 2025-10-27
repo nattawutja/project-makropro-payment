@@ -393,11 +393,23 @@ export default function UploadPage() {
     setDragOver(false)
   }
 
-  const handleFileInputChange = (e) => {
+  const handleFileInputChange = async (e) => {
+    console.log("เข้าฟังส์ชั่นนี้");
+
+    
+    const res = await fetch(`api/upload/clearData`, {
+      method: "GET",
+    });
+
+    const json = await res.json();
+
+    console.log(json,"<-----------jsonClearData");
+
     const files = e.target.files
     if (files && files.length > 0) {
       handleFileSelect(files[0])
     }
+
   }
 
   const handleUpload = async () => {
