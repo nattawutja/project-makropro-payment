@@ -238,7 +238,7 @@ export default async function handler(req, res) {
                 to_char(t1."create_date",'YYYYMMDD') AS "opmdt",
                 ROUND(SUM(t1."Subtotal_incl_tax")::numeric,2) AS "obamt",
                 ROUND(SUM(t1."Commission")::numeric,2) AS "ocom1",
-                ROUND(SUM(t1."Subtotal_incl_tax" - "Amount_transfer" - "Commission")::numeric,2) AS "ocom2",
+                ROUND(SUM(t1."Commission" * "Tax_commission" / 100)::numeric,2) AS "ocom2",
                 ROUND(SUM(CASE WHEN t1."statusOrder" = 'คืนเงินไปแล้ว' THEN t1."Subtotal_incl_tax" ELSE 0 END)::numeric,2) AS "ortna",
                 ROUND(SUM(CASE WHEN t1."statusOrder" = 'คืนเงินไปแล้ว' THEN t1."Commission" + t2."ocom2tmp" ELSE 0 END)::numeric,2) AS "oscam",
                 ROUND(SUM(t1."Amount_transfer")::numeric,2) AS "otram",
