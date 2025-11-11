@@ -73,7 +73,7 @@ export default async function handler(req, res) {
             const Billing_address_street_1 = row['Billing address street 1'] ? String(row['Billing address street 1']).trim().replace(/\u00A0/g, '') : null;
             const Billing_address_street_2 = row['Billing address street 2'] ? String(row['Billing address street 2']).trim().replace(/\u00A0/g, '') : null;
             const offerSKU = row['Offer SKU'] ? String(row['Offer SKU']).trim().replace(/\u00A0/g, '') : null;
-
+            
             row.Shippingaddressstreet1 = shipping_address_street_1;
             row.Shippingaddressstreet2 = shipping_address_street_2;
             row.Billingaddressstreet1 = Billing_address_street_1;
@@ -92,7 +92,7 @@ export default async function handler(req, res) {
             total_amount_incl_tax: row["ราคารวมสุทธิ (รวมภาษี)"] ?? null,
             Commission: row["Commission (excluding taxes)"] ?? null,
             Tax_commission: row["ภาษีคิดจากค่าคอมมิชชั่น"] ?? null,
-            Amount_transfer: row["Amount transferred to ร้าน (including taxes)"] ?? null,
+            Amount_transfer: row["สถานะของคำสั่งซื้อ"] == "คืนเงินไปแล้ว" ? 0 : row["Amount transferred to ร้าน (including taxes)"] ?? null ,
             qty: row["Quantity"] ?? null,
             Product_name: row["สินค้า"] ?? null,
             product_SKU: row["Product SKU"] ?? null,
@@ -216,8 +216,8 @@ export default async function handler(req, res) {
 
           const resultAfterImport = await prisma.$queryRaw`
           SELECT count("OrderNo") as countdata,
-          ROUND(SUM("Amount_transfer") FILTER (WHERE "statusOrder" = 'ปิดแล้ว')::numeric, 2) AS "statusOrderClose",
-          ROUND(SUM("Amount_transfer") FILTER (WHERE "statusOrder" = 'คืนเงินไปแล้ว')::numeric, 2) AS "statusOrderRefund",
+          ROUND(SUM("Subtotal_incl_tax") FILTER (WHERE "statusOrder" = 'ปิดแล้ว')::numeric, 2) AS "statusOrderClose",
+          ROUND(SUM("Subtotal_incl_tax") FILTER (WHERE "statusOrder" = 'คืนเงินไปแล้ว')::numeric, 2) AS "statusOrderRefund",
           ROUND(SUM("Amount_transfer")::numeric, 2) AS "Total",
           ROUND(SUM("Subtotal_incl_tax")::numeric, 2) AS "SubTotal"
           FROM "makroPro_Payment";
